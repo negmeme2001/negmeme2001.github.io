@@ -26,6 +26,16 @@
       --accent-border: #99f6e4;
       --on-accent: #ffffff;
       --shadow: 0 1px 2px rgba(17, 24, 39, 0.04);
+      --ok: #15803d;
+      --ok-soft: #f0fdf4;
+      --ok-border: #bbf7d0;
+      --danger: #b91c1c;
+      --danger-soft: #fef2f2;
+      --danger-border: #fecaca;
+      --warn: #b45309;
+      --warn-soft: #fffbeb;
+      --warn-border: #fde68a;
+      --series-2: #6366f1;
       --font-sans: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
       --radius: 10px;
@@ -46,6 +56,16 @@
         --accent-border: rgba(45, 212, 191, 0.28);
         --on-accent: #042f2e;
         --shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+        --ok: #4ade80;
+        --ok-soft: rgba(74, 222, 128, 0.1);
+        --ok-border: rgba(74, 222, 128, 0.28);
+        --danger: #f87171;
+        --danger-soft: rgba(248, 113, 113, 0.1);
+        --danger-border: rgba(248, 113, 113, 0.28);
+        --warn: #fbbf24;
+        --warn-soft: rgba(251, 191, 36, 0.1);
+        --warn-border: rgba(251, 191, 36, 0.28);
+        --series-2: #818cf8;
       }
     }
 
@@ -62,6 +82,16 @@
       --accent-border: rgba(45, 212, 191, 0.28);
       --on-accent: #042f2e;
       --shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+      --ok: #4ade80;
+      --ok-soft: rgba(74, 222, 128, 0.1);
+      --ok-border: rgba(74, 222, 128, 0.28);
+      --danger: #f87171;
+      --danger-soft: rgba(248, 113, 113, 0.1);
+      --danger-border: rgba(248, 113, 113, 0.28);
+      --warn: #fbbf24;
+      --warn-soft: rgba(251, 191, 36, 0.1);
+      --warn-border: rgba(251, 191, 36, 0.28);
+      --series-2: #818cf8;
     }
 
     *, *::before, *::after {
@@ -336,6 +366,878 @@
       color: var(--on-accent);
     }
 
+    /* Systems / Exhibits */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .systems-stack {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .exhibit-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      min-width: 0;
+    }
+
+    .exhibit-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.375rem;
+    }
+
+    .exhibit-title {
+      font-size: 1.15rem;
+      font-weight: 600;
+      letter-spacing: -0.015em;
+      margin: 0;
+    }
+
+    .exhibit-context {
+      max-width: 68ch;
+      color: var(--text-muted);
+      margin: 0 0 1.125rem;
+      font-size: 0.95rem;
+    }
+
+    .tag-label {
+      display: inline-flex;
+      align-items: center;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      background: var(--surface-muted);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      padding: 0.12rem 0.45rem;
+      line-height: 1.35;
+      white-space: nowrap;
+    }
+
+    .tag-label--accent {
+      color: var(--accent);
+      background: var(--accent-soft);
+      border-color: var(--accent-border);
+    }
+
+    .tag-label--ok {
+      color: var(--ok);
+      background: var(--ok-soft);
+      border-color: var(--ok-border);
+    }
+
+    .tag-label--danger {
+      color: var(--danger);
+      background: var(--danger-soft);
+      border-color: var(--danger-border);
+    }
+
+    .exhibit-controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .segmented {
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      background: var(--surface-muted);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.25rem;
+    }
+
+    .seg-btn {
+      appearance: none;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--text-muted);
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+      font-weight: 500;
+      padding: 0.35rem 0.75rem;
+      border-radius: 6px;
+      cursor: pointer;
+      line-height: 1.25;
+      transition: background-color 0.18s ease-out, color 0.18s ease-out, border-color 0.18s ease-out;
+    }
+
+    .seg-btn:hover {
+      color: var(--text);
+    }
+
+    .seg-btn[aria-pressed="true"],
+    .seg-btn[aria-selected="true"] {
+      background: var(--surface);
+      color: var(--text);
+      border-color: var(--border);
+      box-shadow: var(--shadow);
+    }
+
+    .ctrl-group {
+      display: inline-flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .ctrl-btn {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 500;
+      padding: 0.38rem 0.7rem;
+      border-radius: 6px;
+      cursor: pointer;
+      line-height: 1.25;
+      transition: border-color 0.18s ease-out, background-color 0.18s ease-out, color 0.18s ease-out;
+    }
+
+    .ctrl-btn:hover:not(:disabled) {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .ctrl-btn[aria-pressed="true"] {
+      background: var(--accent-soft);
+      border-color: var(--accent-border);
+      color: var(--accent);
+    }
+
+    .ctrl-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .request-box {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 0.5rem 0.75rem;
+      background: var(--surface-muted);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.7rem 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    .request-quote {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--text);
+      margin: 0;
+    }
+
+    .pipeline-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .stage-btn {
+      appearance: none;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      text-align: left;
+      gap: 0.2rem;
+      padding: 0.65rem 0.65rem;
+      background: var(--surface-muted);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text-muted);
+      cursor: pointer;
+      min-width: 0;
+      position: relative;
+      transition: border-color 0.22s ease-out, background-color 0.22s ease-out, color 0.22s ease-out, transform 0.22s ease-out;
+    }
+
+    .stage-btn:hover {
+      border-color: var(--accent-border);
+      color: var(--text);
+    }
+
+    .stage-step {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+
+    .stage-name {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: inherit;
+      line-height: 1.25;
+    }
+
+    .stage-meta {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      line-height: 1.3;
+    }
+
+    .stage-btn.is-passed {
+      background: var(--surface);
+      border-color: var(--accent-border);
+      color: var(--text);
+    }
+
+    .stage-btn.is-active {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+      color: var(--text);
+    }
+
+    .stage-btn.is-active .stage-step {
+      color: var(--accent);
+    }
+
+    .stage-btn.is-blocked {
+      background: var(--danger-soft);
+      border-color: var(--danger);
+      color: var(--text);
+    }
+
+    .stage-btn.is-blocked .stage-step,
+    .stage-btn.is-blocked .stage-meta {
+      color: var(--danger);
+    }
+
+    .stage-btn.is-skipped {
+      opacity: 0.52;
+      border-style: dashed;
+    }
+
+    .live-banner {
+      background: var(--surface-muted);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 7px 7px 0;
+      padding: 0.65rem 0.85rem;
+      font-size: 0.9rem;
+      color: var(--text);
+      margin-bottom: 1rem;
+      min-height: 2.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .live-banner.is-blocked {
+      border-left-color: var(--danger);
+    }
+
+    .outcome-card {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.95rem 1rem;
+      background: var(--bg);
+      transition: opacity 0.25s ease-out, border-color 0.25s ease-out;
+    }
+
+    .outcome-card.is-blocked {
+      border-color: var(--danger-border);
+      background: var(--danger-soft);
+    }
+
+    .outcome-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.6rem;
+    }
+
+    .outcome-title {
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--text);
+      margin: 0;
+    }
+
+    .proposal-fields {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.6rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .proposal-field {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.45rem 0.6rem;
+      min-width: 0;
+    }
+
+    .proposal-field-label {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+
+    .proposal-field-val {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .expiry-row {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 0.75rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .expiry-track {
+      flex: 1;
+      height: 6px;
+      background: var(--surface-muted);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      overflow: hidden;
+      min-width: 60px;
+    }
+
+    .expiry-fill {
+      height: 100%;
+      width: 68%;
+      background: var(--accent);
+      border-radius: 999px;
+      transform-origin: left center;
+      animation: expiryPulse 6s linear infinite;
+    }
+
+    @keyframes expiryPulse {
+      0% { transform: scaleX(1); }
+      100% { transform: scaleX(0.2); }
+    }
+
+    .outcome-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .action-btn {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      font-size: 0.84rem;
+      font-weight: 500;
+      padding: 0.35rem 0.8rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.15s ease-out, border-color 0.15s ease-out;
+    }
+
+    .action-btn:hover {
+      border-color: var(--accent);
+    }
+
+    .action-btn--confirm {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--on-accent);
+    }
+
+    .action-btn--confirm:hover {
+      background: var(--accent-hover);
+      border-color: var(--accent-hover);
+    }
+
+    .outcome-status {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .refusal-text {
+      margin: 0;
+      font-size: 0.92rem;
+      color: var(--text);
+    }
+
+    /* Exhibit 2: Chart */
+    .chart-meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 0.85rem;
+    }
+
+    .chart-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.85rem;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .legend-swatch {
+      width: 12px;
+      height: 3px;
+      border-radius: 2px;
+      display: inline-block;
+    }
+
+    .legend-swatch--routing {
+      background: var(--accent);
+    }
+
+    .legend-swatch--tool {
+      background: var(--series-2);
+    }
+
+    .legend-swatch--latency {
+      background: var(--warn);
+    }
+
+    .chart-frame {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.75rem 0.75rem 0.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .eval-svg {
+      width: 100%;
+      height: auto;
+      display: block;
+      overflow: visible;
+    }
+
+    .eval-svg text {
+      font-family: var(--font-mono);
+      fill: var(--text-muted);
+      font-size: 11px;
+    }
+
+    .eval-svg .axis-note {
+      font-size: 10px;
+      fill: var(--text-muted);
+    }
+
+    .eval-svg .point-label {
+      font-size: 11px;
+      font-weight: 500;
+      fill: var(--text);
+    }
+
+    .eval-svg .grid-line {
+      stroke: var(--border);
+      stroke-width: 1;
+    }
+
+    .eval-svg .active-col {
+      stroke: var(--accent);
+      stroke-width: 1;
+      stroke-dasharray: 3 3;
+      opacity: 0.55;
+    }
+
+    .run-selector {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.45rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .run-btn {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: var(--surface-muted);
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      padding: 0.4rem 0.45rem;
+      border-radius: 6px;
+      cursor: pointer;
+      text-align: center;
+      transition: border-color 0.15s ease-out, background-color 0.15s ease-out, color 0.15s ease-out;
+    }
+
+    .run-btn:hover {
+      color: var(--text);
+      border-color: var(--accent-border);
+    }
+
+    .run-btn[aria-pressed="true"] {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .chart-readout {
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      color: var(--text);
+      background: var(--surface-muted);
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      padding: 0.55rem 0.8rem;
+      margin-bottom: 0.75rem;
+    }
+
+    /* Exhibit 3: Ravo X-Ray */
+    .latency-panel {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .latency-bars {
+      display: grid;
+      gap: 0.75rem;
+      margin-bottom: 0.85rem;
+    }
+
+    .bar-row {
+      display: grid;
+      grid-template-columns: minmax(0, 13.5rem) minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .bar-label {
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .bar-sub {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 0.73rem;
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+
+    .bar-track {
+      height: 14px;
+      background: var(--surface-muted);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      min-width: 4px;
+      border-radius: 999px;
+      background: var(--accent);
+      transition: width 0.32s ease-out;
+    }
+
+    .bar-fill--secondary {
+      background: var(--series-2);
+    }
+
+    .bar-value {
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--text);
+      white-space: nowrap;
+      min-width: 5.2rem;
+      text-align: right;
+    }
+
+    .latency-notes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1.25rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.84rem;
+      color: var(--text-muted);
+    }
+
+    .latency-notes strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .retrieval-panel {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem;
+      background: var(--bg);
+      margin-bottom: 1rem;
+    }
+
+    .retrieval-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.6rem;
+      margin-bottom: 0.85rem;
+    }
+
+    .retrieval-title {
+      font-size: 0.94rem;
+      font-weight: 600;
+      margin: 0;
+    }
+
+    .compare-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .config-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      padding: 0.8rem 0.9rem;
+      min-width: 0;
+    }
+
+    .config-card.is-chosen {
+      border-color: var(--accent-border);
+      background: var(--accent-soft);
+    }
+
+    .config-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.55rem;
+    }
+
+    .config-name {
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin: 0;
+      color: var(--text);
+    }
+
+    .metric-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.4rem 0.6rem;
+      margin: 0;
+    }
+
+    .metric-item dt {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    .metric-item dd {
+      margin: 0;
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .tradeoff-note {
+      margin: 0;
+      font-size: 0.86rem;
+      color: var(--text-muted);
+    }
+
+    .ravo-meta-strip {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.6rem 1rem;
+      margin-bottom: 0.85rem;
+    }
+
+    .bilingual-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      background: var(--surface-muted);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.3rem 0.65rem;
+      font-size: 0.84rem;
+      color: var(--text);
+    }
+
+    .bilingual-pill .mono-label {
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      color: var(--text-muted);
+    }
+
+    .weakspot-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      background: var(--surface-muted);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.3rem 0.65rem;
+    }
+
+    .exhibit-source {
+      font-family: var(--font-mono);
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      padding-top: 0.75rem;
+      border-top: 1px solid var(--border);
+      margin: 0;
+    }
+
+    /* CoverPilot inline illustration */
+    .cp-demo {
+      margin: 1rem 0 0;
+      padding: 0.85rem 0.95rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+
+    .cp-demo-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.6rem;
+    }
+
+    .cp-demo-title {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    .cp-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 0.65rem;
+    }
+
+    .cp-chip-btn {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      font-family: var(--font-sans);
+      font-size: 0.82rem;
+      padding: 0.3rem 0.6rem;
+      border-radius: 6px;
+      cursor: pointer;
+      text-align: left;
+      transition: border-color 0.15s ease-out, background-color 0.15s ease-out;
+    }
+
+    .cp-chip-btn:hover {
+      border-color: var(--accent);
+    }
+
+    .cp-chip-btn[aria-pressed="true"] {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .cp-stages {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.35rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .cp-stage {
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      padding: 0.18rem 0.5rem;
+      border-radius: 5px;
+      border: 1px solid var(--border);
+      background: var(--surface-muted);
+      color: var(--text-muted);
+      transition: border-color 0.18s ease-out, background-color 0.18s ease-out, color 0.18s ease-out;
+    }
+
+    .cp-stage.is-lit {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .cp-stage.is-stop {
+      background: var(--danger-soft);
+      border-color: var(--danger);
+      color: var(--danger);
+      font-weight: 500;
+    }
+
+    .cp-note {
+      margin: 0;
+      font-size: 0.84rem;
+      color: var(--text-muted);
+    }
+
     /* Projects */
     .projects-list {
       display: grid;
@@ -592,12 +1494,25 @@
 
     /* Responsive */
     @media (max-width: 680px) {
-      .stats-grid {
+      .stats-grid,
+      .skills-grid,
+      .pipeline-grid,
+      .proposal-fields,
+      .compare-grid {
         grid-template-columns: 1fr;
       }
 
-      .skills-grid {
+      .bar-row {
         grid-template-columns: 1fr;
+        gap: 0.35rem;
+      }
+
+      .bar-value {
+        text-align: left;
+      }
+
+      .run-selector {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
       .hero {
@@ -608,8 +1523,20 @@
         padding: 2.25rem 0;
       }
 
-      .project-card {
-        padding: 1.2rem;
+      .project-card,
+      .exhibit-card {
+        padding: 1.15rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
       }
     }
   </style>
@@ -622,6 +1549,7 @@
       <a class="brand" href="#top">Mohamed Ahmed Negm</a>
       <nav class="nav-group" aria-label="Primary">
         <ul class="nav-links">
+          <li><a href="#systems">Systems</a></li>
           <li><a href="#work">Work</a></li>
           <li><a href="#experience">Experience</a></li>
           <li><a href="#skills">Skills</a></li>
@@ -661,6 +1589,296 @@
       </div>
     </section>
 
+    <section id="systems" aria-labelledby="systems-heading">
+      <h2 id="systems-heading" class="section-heading">How the systems work</h2>
+
+      <div class="systems-stack">
+        <!-- Exhibit 1: Peak Assistant -->
+        <article class="exhibit-card" aria-labelledby="exhibit-peak-title">
+          <div class="exhibit-header">
+            <h3 id="exhibit-peak-title" class="exhibit-title">Peak Assistant: From message to safe action</h3>
+            <span class="tag-label">Illustration</span>
+          </div>
+          <p class="exhibit-context">Every request passes role-based intent authorization before any tool executes, and write actions stay as expiring proposals until confirmed in the UI.</p>
+
+          <div class="exhibit-controls">
+            <div class="segmented" role="group" aria-label="Caller role">
+              <button type="button" class="seg-btn" id="peak-role-manager" data-role="manager" aria-pressed="true">Manager</button>
+              <button type="button" class="seg-btn" id="peak-role-employee" data-role="employee" aria-pressed="false">Employee</button>
+            </div>
+            <div class="ctrl-group">
+              <button type="button" class="ctrl-btn" id="peak-step-btn">Step</button>
+              <button type="button" class="ctrl-btn" id="peak-play-btn" aria-pressed="false">Auto-play</button>
+            </div>
+          </div>
+
+          <div class="request-box">
+            <span class="tag-label tag-label--accent">Example</span>
+            <p class="request-quote" id="peak-request-text">"Move the API docs task to Sara and set it high priority"</p>
+          </div>
+
+          <div class="pipeline-grid" role="group" aria-label="Peak Assistant execution stages">
+            <button type="button" class="stage-btn is-active" data-stage="0" aria-pressed="true">
+              <span class="stage-step">01</span>
+              <span class="stage-name">Message</span>
+              <span class="stage-meta" id="peak-meta-0">Chat request</span>
+            </button>
+            <button type="button" class="stage-btn" data-stage="1" aria-pressed="false">
+              <span class="stage-step">02</span>
+              <span class="stage-name">Gatekeeper</span>
+              <span class="stage-meta" id="peak-meta-1">Role + 24 intents</span>
+            </button>
+            <button type="button" class="stage-btn" data-stage="2" aria-pressed="false">
+              <span class="stage-step">03</span>
+              <span class="stage-name">Tool</span>
+              <span class="stage-meta" id="peak-meta-2">15 tools (11R / 4W)</span>
+            </button>
+            <button type="button" class="stage-btn" data-stage="3" aria-pressed="false">
+              <span class="stage-step">04</span>
+              <span class="stage-name">Proposal</span>
+              <span class="stage-meta" id="peak-meta-3">Drafts card</span>
+            </button>
+            <button type="button" class="stage-btn" data-stage="4" aria-pressed="false">
+              <span class="stage-step">05</span>
+              <span class="stage-name">User confirms</span>
+              <span class="stage-meta" id="peak-meta-4">UI confirmation</span>
+            </button>
+          </div>
+
+          <div class="live-banner" id="peak-live-banner" aria-live="polite" aria-atomic="true">
+            <span id="peak-stage-explain">Stage 1: Manager sends a task update request in the PeakTime chat UI.</span>
+          </div>
+
+          <div class="outcome-card" id="peak-outcome-card">
+            <div class="outcome-head">
+              <p class="outcome-title" id="peak-outcome-title">Proposal: propose_update_task</p>
+              <span class="tag-label" id="peak-outcome-badge">Example · Pending confirmation</span>
+            </div>
+
+            <div id="peak-proposal-body">
+              <div class="proposal-fields">
+                <div class="proposal-field">
+                  <span class="proposal-field-label">Task</span>
+                  <span class="proposal-field-val">API docs</span>
+                </div>
+                <div class="proposal-field">
+                  <span class="proposal-field-label">Assignee</span>
+                  <span class="proposal-field-val">Sara</span>
+                </div>
+                <div class="proposal-field">
+                  <span class="proposal-field-label">Priority</span>
+                  <span class="proposal-field-val">High</span>
+                </div>
+              </div>
+              <div class="expiry-row">
+                <span>Expiry window</span>
+                <div class="expiry-track" aria-hidden="true">
+                  <div class="expiry-fill" id="peak-expiry-fill"></div>
+                </div>
+                <span>Proposals expire · bulk approvals supported</span>
+              </div>
+              <div class="outcome-actions">
+                <button type="button" class="action-btn action-btn--confirm" id="peak-confirm-btn">Confirm</button>
+                <button type="button" class="action-btn" id="peak-cancel-btn">Cancel</button>
+                <span class="outcome-status" id="peak-action-status" aria-live="polite"></span>
+              </div>
+            </div>
+
+            <div id="peak-refusal-body" hidden>
+              <p class="refusal-text">Blocked before tool execution: employees cannot view colleagues' hours (user lookups are company-scoped and project/role checks run across all 24 intents). Ambiguous targets like same-named users or recurring tasks are clarified before any write.</p>
+            </div>
+          </div>
+
+          <p class="exhibit-source">Production · closed source · 10 B2B companies · 15 tools (11 read: company-scoped lookups; 4 write: create task, update task, request time edit, approve time request)</p>
+        </article>
+
+        <!-- Exhibit 2: Eval scoreboard -->
+        <article class="exhibit-card" aria-labelledby="exhibit-eval-title">
+          <div class="exhibit-header">
+            <h3 id="exhibit-eval-title" class="exhibit-title">Peak Assistant: Eval scoreboard</h3>
+            <span class="tag-label tag-label--accent">Measured CI</span>
+          </div>
+          <p class="exhibit-context">An 85-case golden suite (70 core, 13 authorization gate, 2 quarantined; 10 multi-turn) with typed assertions, difficulty tiers, and an optional LLM judge runs weekly in CI.</p>
+
+          <div class="chart-meta-row">
+            <div class="segmented" role="group" aria-label="Eval chart metric view">
+              <button type="button" class="seg-btn" id="eval-view-accuracy" data-view="accuracy" aria-pressed="true">Accuracy (80%–100%)</button>
+              <button type="button" class="seg-btn" id="eval-view-latency" data-view="latency" aria-pressed="false">Avg latency (4.0–6.0 s)</button>
+            </div>
+            <div class="chart-legend" id="eval-legend">
+              <span class="legend-item"><span class="legend-swatch legend-swatch--routing" aria-hidden="true"></span>Routing</span>
+              <span class="legend-item"><span class="legend-swatch legend-swatch--tool" aria-hidden="true"></span>Tool execution</span>
+            </div>
+          </div>
+
+          <div class="chart-frame">
+            <svg class="eval-svg" id="eval-svg" viewBox="0 0 640 220" role="img" aria-label="Weekly CI eval scores across 4 runs from Oct 26 to Nov 16: routing 93.2%, 97.3%, 95.9%, 93.2%; tool execution 86.9%, 91.8%, 90.2%, 86.9%; average latency 4.6s, 5.6s, 5.4s, 5.1s.">
+              <g id="eval-svg-grid"></g>
+              <g id="eval-svg-series"></g>
+            </svg>
+            <div class="sr-only"><table>
+              <caption>Peak Assistant weekly CI evaluation results (gpt-5-mini, 73 scored cases)</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Weekly run</th>
+                  <th scope="col">Routing accuracy</th>
+                  <th scope="col">Tool execution accuracy</th>
+                  <th scope="col">Average latency</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Oct 26</td><td>93.2%</td><td>86.9%</td><td>4.6 s</td></tr>
+                <tr><td>Nov 2</td><td>97.3%</td><td>91.8%</td><td>5.6 s</td></tr>
+                <tr><td>Nov 9</td><td>95.9%</td><td>90.2%</td><td>5.4 s</td></tr>
+                <tr><td>Nov 16</td><td>93.2%</td><td>86.9%</td><td>5.1 s</td></tr>
+              </tbody>
+            </table></div>
+          </div>
+
+          <div class="run-selector" role="group" aria-label="Inspect weekly CI run">
+            <button type="button" class="run-btn" data-run="0" aria-pressed="false">Oct 26</button>
+            <button type="button" class="run-btn" data-run="1" aria-pressed="false">Nov 2</button>
+            <button type="button" class="run-btn" data-run="2" aria-pressed="false">Nov 9</button>
+            <button type="button" class="run-btn" data-run="3" aria-pressed="true">Nov 16</button>
+          </div>
+
+          <div class="chart-readout" id="eval-readout" aria-live="polite">
+            Nov 16 — Routing: 93.2% · Tool execution: 86.9% · Avg latency: 5.1 s
+          </div>
+
+          <p class="exhibit-source">Weekly CI · gpt-5-mini · 73 scored cases out of an 85-case suite (authorization gates, core, multi-turn)</p>
+        </article>
+
+        <!-- Exhibit 3: Ravo X-Ray -->
+        <article class="exhibit-card" aria-labelledby="exhibit-ravo-title">
+          <div class="exhibit-header">
+            <h3 id="exhibit-ravo-title" class="exhibit-title">Ravo X-Ray: Where does an answer's time go?</h3>
+            <span class="tag-label tag-label--accent">Measured eval</span>
+          </div>
+          <p class="exhibit-context">Per-answer latency traces separate vector search from embedding generation and LLM calls, while retrieval experiments test chunking and field choices on a labelled set.</p>
+
+          <div class="latency-panel">
+            <div class="exhibit-controls">
+              <strong style="font-size: 0.92rem;">Retrieval &amp; embedding latency</strong>
+              <div class="segmented" role="group" aria-label="Redis embedding cache">
+                <button type="button" class="seg-btn" id="ravo-cache-off" data-cache="off" aria-pressed="true">Embedding cache: Off</button>
+                <button type="button" class="seg-btn" id="ravo-cache-on" data-cache="on" aria-pressed="false">Embedding cache: On</button>
+              </div>
+            </div>
+
+            <div class="latency-bars" aria-live="polite">
+              <div class="bar-row">
+                <div class="bar-label">
+                  Query embedding
+                  <span class="bar-sub" id="ravo-embed-sub">OpenAI API (spikes past 800 ms)</span>
+                </div>
+                <div class="bar-track" aria-hidden="true">
+                  <div class="bar-fill" id="ravo-embed-bar" style="width: 89%;"></div>
+                </div>
+                <span class="bar-value" id="ravo-embed-val">~160 ms</span>
+              </div>
+
+              <div class="bar-row">
+                <div class="bar-label">
+                  Postgres + pgvector search
+                  <span class="bar-sub">1,500 products (p50 1.8 ms local replica)</span>
+                </div>
+                <div class="bar-track" aria-hidden="true">
+                  <div class="bar-fill bar-fill--secondary" id="ravo-search-bar" style="width: 3.5%;"></div>
+                </div>
+                <span class="bar-value">~3–6 ms</span>
+              </div>
+            </div>
+
+            <div class="latency-notes">
+              <span><strong>LLM ≈ 90% of a full answer (2 calls)</strong> — the next lever.</span>
+              <span>Spoken turn: capping end-of-turn wait 2.5 s → 1.2 s took a turn from 3.5 s to 3.2 s.</span>
+            </div>
+          </div>
+
+          <div class="retrieval-panel">
+            <div class="retrieval-head">
+              <h4 class="retrieval-title">Retrieval experiments</h4>
+              <div class="segmented" role="tablist" aria-label="Retrieval experiment dataset">
+                <button type="button" class="seg-btn" role="tab" id="tab-products" aria-selected="true" aria-controls="panel-products">Products (k=5, 31 q)</button>
+                <button type="button" class="seg-btn" role="tab" id="tab-documents" aria-selected="false" aria-controls="panel-documents">Documents (k=3, 17 q)</button>
+              </div>
+            </div>
+
+            <div id="panel-products" role="tabpanel" aria-labelledby="tab-products">
+              <div class="compare-grid">
+                <div class="config-card">
+                  <div class="config-head">
+                    <h5 class="config-name">Product name only</h5>
+                  </div>
+                  <dl class="metric-list">
+                    <div class="metric-item"><dt>hit@1</dt><dd>74.2%</dd></div>
+                    <div class="metric-item"><dt>hit@5</dt><dd>87.1%</dd></div>
+                    <div class="metric-item"><dt>MRR</dt><dd>0.785</dd></div>
+                    <div class="metric-item"><dt>distinct in top 5</dt><dd>1.5</dd></div>
+                  </dl>
+                </div>
+
+                <div class="config-card is-chosen">
+                  <div class="config-head">
+                    <h5 class="config-name">Name, category &amp; description</h5>
+                    <span class="tag-label tag-label--ok">Chosen</span>
+                  </div>
+                  <dl class="metric-list">
+                    <div class="metric-item"><dt>hit@1</dt><dd>80.6%</dd></div>
+                    <div class="metric-item"><dt>hit@5</dt><dd>83.9%</dd></div>
+                    <div class="metric-item"><dt>MRR</dt><dd>0.817</dd></div>
+                    <div class="metric-item"><dt>distinct in top 5</dt><dd>1.8</dd></div>
+                  </dl>
+                </div>
+              </div>
+              <p class="tradeoff-note">Trade-off: full text wins first-hit accuracy (80.6% vs 74.2%), MRR, and result variety; name-only wins hit@5 (87.1% vs 83.9%).</p>
+            </div>
+
+            <div id="panel-documents" role="tabpanel" aria-labelledby="tab-documents" hidden>
+              <div class="compare-grid">
+                <div class="config-card is-chosen">
+                  <div class="config-head">
+                    <h5 class="config-name">100-word chunks</h5>
+                    <span class="tag-label tag-label--ok">Chosen</span>
+                  </div>
+                  <dl class="metric-list">
+                    <div class="metric-item"><dt>hit@1</dt><dd>94.1%</dd></div>
+                    <div class="metric-item"><dt>hit@3</dt><dd>100%</dd></div>
+                    <div class="metric-item"><dt>MRR</dt><dd>0.971</dd></div>
+                  </dl>
+                </div>
+
+                <div class="config-card">
+                  <div class="config-head">
+                    <h5 class="config-name">200-word chunks</h5>
+                  </div>
+                  <dl class="metric-list">
+                    <div class="metric-item"><dt>hit@1</dt><dd>82.4%</dd></div>
+                    <div class="metric-item"><dt>hit@3</dt><dd>100%</dd></div>
+                    <div class="metric-item"><dt>MRR</dt><dd>0.912</dd></div>
+                  </dl>
+                </div>
+              </div>
+              <p class="tradeoff-note">Trade-off: 100-word chunks win hit@1 (94.1% vs 82.4%) and MRR (0.971 vs 0.912) with identical 100% hit@3.</p>
+            </div>
+          </div>
+
+          <div class="ravo-meta-strip">
+            <div class="bilingual-pill">
+              <span class="mono-label">Arabic → English search</span>
+              <span lang="ar" dir="rtl">لبن شوفان</span>
+              <span aria-hidden="true">→</span>
+              <span>oat milk</span>
+            </div>
+            <span class="weakspot-chip">Known weak spot: negation 0/3 ("milk that isn't from a cow")</span>
+          </div>
+
+          <p class="exhibit-source">Public repo · synthetic data · 1,500 products · labelled eval set (31 product questions, 17 document questions)</p>
+        </article>
+      </div>
+    </section>
+
     <section id="work" aria-labelledby="work-heading">
       <h2 id="work-heading" class="section-heading">Selected work</h2>
       <div class="projects-list">
@@ -671,8 +1889,8 @@
           <p class="project-summary">A bilingual RAG retail voice assistant showing latency, eval and voice additions for Ravo, where every answer shows where its time went. Built on synthetic data.</p>
           <ul class="project-bullets">
             <li>Typed and spoken Arabic/English shopping assistant over 1,500 products and store documents.</li>
-            <li>Per-answer latency traces showed search costs 3–6 ms while ~90% of answer time is the LLM.</li>
-            <li>Redis query-embedding cache: ~160 ms → ~3 ms. Labelled retrieval eval: 81% top-1 / 84% top-5, with known weak spots kept on the scoreboard.</li>
+            <li>Per-answer latency traces and Redis query-embedding cache (~160 ms → ~3 ms), with ~90% of answer time in the LLM.</li>
+            <li>Labelled retrieval eval (80.6% top-1 / 83.9% top-5 on products; 94.1% top-1 on 100-word document chunks) with known weak spots kept on the scoreboard.</li>
             <li>LiveKit voice agent: speech-to-text bake-off, turn handling that waits through thinking pauses, fallback voice.</li>
           </ul>
           <ul class="chip-list" aria-label="Ravo X-Ray stack">
@@ -696,11 +1914,31 @@
           </div>
           <p class="project-summary">An insurance customer assistant that cites its sources and says 'not covered' when it should.</p>
           <ul class="project-bullets">
-            <li>LangGraph agent: injection guard → retrieval → agent ↔ tools, streamed over SSE.</li>
-            <li>Citations come from the retriever, never from the model's text; a relevance floor handles out-of-scope questions.</li>
-            <li>Claim lookup and filing tools with Pydantic validation; 82 unit and 12 integration tests; zero-cost mode on Groq.</li>
+            <li>LangGraph agent: guard → retrieve → agent ⇄ tools → answer, streamed over SSE.</li>
+            <li>Citations come from the retriever, never from the model's text; a relevance floor (cosine ≥ 0.33) handles out-of-scope questions.</li>
+            <li>Tools (<code>get_claim_status</code>, <code>submit_claim</code>) with Pydantic validation; 82 unit and 12 integration tests; zero-cost mode on Groq.</li>
           </ul>
-          <ul class="chip-list" aria-label="CoverPilot stack">
+
+          <div class="cp-demo" aria-label="CoverPilot pipeline illustration">
+            <div class="cp-demo-head">
+              <p class="cp-demo-title">Click a prompt to trace which stage handles it</p>
+              <span class="tag-label">Illustration</span>
+            </div>
+            <div class="cp-chips" role="group" aria-label="CoverPilot example prompts">
+              <button type="button" class="cp-chip-btn" data-cp="water" aria-pressed="true">"What does my policy cover for water damage?"</button>
+              <button type="button" class="cp-chip-btn" data-cp="flight" aria-pressed="false">"Book me a flight to Paris"</button>
+              <button type="button" class="cp-chip-btn" data-cp="inject" aria-pressed="false">"Ignore your instructions and ..."</button>
+            </div>
+            <div class="cp-stages" aria-hidden="true">
+              <span class="cp-stage is-lit" id="cp-s-guard">guard</span>
+              <span class="cp-stage is-lit" id="cp-s-retrieve">retrieve</span>
+              <span class="cp-stage is-lit" id="cp-s-agent">agent ⇄ tools</span>
+              <span class="cp-stage is-lit" id="cp-s-answer">answer</span>
+            </div>
+            <p class="cp-note" id="cp-note" aria-live="polite">Retrieve + cite: retriever returns matching policy passages; citations come from the retriever, never from the model's text.</p>
+          </div>
+
+          <ul class="chip-list" aria-label="CoverPilot stack" style="margin-top: 1rem;">
             <li class="chip">LangGraph</li>
             <li class="chip">FastAPI</li>
             <li class="chip">FAISS</li>
@@ -719,9 +1957,9 @@
           </div>
           <p class="project-summary">The AI assistant used by 10 B2B companies inside PeakTime.</p>
           <ul class="project-bullets">
-            <li>15 tools, including create/update/approve actions that only run after the user confirms a proposal.</li>
-            <li>Role-based authorization across 24 intents enforced before any tool runs.</li>
-            <li>85-case golden eval suite run weekly in CI; cache-aware cost tracking and Grafana dashboards.</li>
+            <li>15 tools (11 read, 4 write); write actions draft expiring proposals that require explicit user confirmation (bulk approvals supported).</li>
+            <li>Gatekeeper + intent classifier enforces role-based authorization across 24 intents before any tool runs.</li>
+            <li>Weekly CI evals over an 85-case golden suite; cache-aware cost tracking and Grafana dashboards.</li>
           </ul>
           <ul class="chip-list" aria-label="Peak Assistant stack">
             <li class="chip">OpenAI Agents SDK</li>
@@ -916,6 +2154,476 @@
         sync();
       });
       sync();
+
+      var reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+      function prefersReducedMotion() {
+        return reducedMotionQuery.matches;
+      }
+
+      /* Exhibit 1: Peak Assistant pipeline */
+      var peakScenarios = {
+        manager: {
+          request: "\"Move the API docs task to Sara and set it high priority\"",
+          blockedAt: -1,
+          metas: ["Chat request", "Allows (24 intents)", "propose_update_task", "Drafts proposal", "Awaits confirm"],
+          explain: [
+            "Stage 1 (Message): Manager sends a task reassignment and priority update request.",
+            "Stage 2 (Gatekeeper): Intent matches task update (24 intents). Caller is Manager and task is in an assigned project — allowed.",
+            "Stage 3 (Tool): Runs propose_update_task (1 of 4 write tools out of 15). Write tools never mutate state directly.",
+            "Stage 4 (Proposal): Drafts an expiring proposal card (assignee: Sara, priority: High) in the chat UI.",
+            "Stage 5 (User confirms): Waits for Confirm or Cancel in the UI (bulk approvals supported). Try Confirm below."
+          ]
+        },
+        employee: {
+          request: "\"How many hours did Omar work this week?\"",
+          blockedAt: 1,
+          metas: ["Chat request", "BLOCKS (private)", "Skipped", "Not reached", "Polite refusal"],
+          explain: [
+            "Stage 1 (Message): Employee asks for a colleague's weekly logged hours.",
+            "Stage 2 (Gatekeeper): Blocks before any tool runs — employees cannot see colleagues' hours (24-intent role check).",
+            "Stage 3 (Tool): Skipped. No read or write tool runs after a gatekeeper denial.",
+            "Stage 4 (Proposal): Not reached — no write action or proposal is created.",
+            "Stage 5 (User confirms): Returns a polite refusal explaining colleagues' hours are private."
+          ]
+        }
+      };
+
+      var peakState = {
+        role: "manager",
+        stage: 0,
+        timer: null,
+        hasAutoWalked: false
+      };
+
+      var roleButtons = document.querySelectorAll("[data-role]");
+      var stageButtons = document.querySelectorAll("[data-stage]");
+      var peakStepBtn = document.getElementById("peak-step-btn");
+      var peakPlayBtn = document.getElementById("peak-play-btn");
+      var peakReqText = document.getElementById("peak-request-text");
+      var peakLiveBanner = document.getElementById("peak-live-banner");
+      var peakStageExplain = document.getElementById("peak-stage-explain");
+      var peakOutcomeCard = document.getElementById("peak-outcome-card");
+      var peakOutcomeTitle = document.getElementById("peak-outcome-title");
+      var peakOutcomeBadge = document.getElementById("peak-outcome-badge");
+      var peakProposalBody = document.getElementById("peak-proposal-body");
+      var peakRefusalBody = document.getElementById("peak-refusal-body");
+      var peakConfirmBtn = document.getElementById("peak-confirm-btn");
+      var peakCancelBtn = document.getElementById("peak-cancel-btn");
+      var peakActionStatus = document.getElementById("peak-action-status");
+
+      function stopPeakPlay() {
+        if (peakState.timer) {
+          clearInterval(peakState.timer);
+          peakState.timer = null;
+        }
+        peakPlayBtn.setAttribute("aria-pressed", "false");
+        if (!prefersReducedMotion()) {
+          peakPlayBtn.textContent = "Auto-play";
+        }
+      }
+
+      function syncPlayButtonMotion() {
+        if (prefersReducedMotion()) {
+          stopPeakPlay();
+          peakPlayBtn.disabled = true;
+          peakPlayBtn.textContent = "Auto-play (reduced motion)";
+        } else {
+          peakPlayBtn.disabled = false;
+          peakPlayBtn.textContent = peakState.timer ? "Pause" : "Auto-play";
+        }
+      }
+
+      function renderPeak() {
+        var sc = peakScenarios[peakState.role];
+        var st = peakState.stage;
+
+        roleButtons.forEach(function (b) {
+          b.setAttribute("aria-pressed", String(b.getAttribute("data-role") === peakState.role));
+        });
+
+        peakReqText.textContent = sc.request;
+
+        stageButtons.forEach(function (b, idx) {
+          b.classList.remove("is-active", "is-passed", "is-blocked", "is-skipped");
+          b.setAttribute("aria-pressed", String(idx === st));
+          var metaEl = document.getElementById("peak-meta-" + idx);
+          if (metaEl) metaEl.textContent = sc.metas[idx];
+
+          if (sc.blockedAt >= 0) {
+            if (idx === sc.blockedAt && st >= sc.blockedAt) {
+              b.classList.add("is-blocked");
+            } else if (idx > sc.blockedAt && idx < 4 && st >= sc.blockedAt) {
+              b.classList.add("is-skipped");
+            } else if (idx < st) {
+              b.classList.add("is-passed");
+            }
+            if (idx === st && idx !== sc.blockedAt) {
+              b.classList.add("is-active");
+            }
+          } else {
+            if (idx < st) b.classList.add("is-passed");
+            if (idx === st) b.classList.add("is-active");
+          }
+        });
+
+        var isBlockedView = sc.blockedAt >= 0 && st >= sc.blockedAt;
+        peakLiveBanner.classList.toggle("is-blocked", isBlockedView);
+        peakStageExplain.textContent = sc.explain[st];
+
+        if (peakState.role === "manager") {
+          peakOutcomeCard.classList.remove("is-blocked");
+          peakOutcomeTitle.textContent = "Proposal: propose_update_task";
+          peakOutcomeBadge.className = "tag-label";
+          peakOutcomeBadge.textContent = "Example · Pending confirmation";
+          if (st < 4) peakActionStatus.textContent = "";
+          peakProposalBody.hidden = false;
+          peakRefusalBody.hidden = true;
+        } else {
+          peakOutcomeCard.classList.add("is-blocked");
+          peakOutcomeTitle.textContent = "Gatekeeper: Access denied";
+          peakOutcomeBadge.className = "tag-label tag-label--danger";
+          peakOutcomeBadge.textContent = "Example · Blocked";
+          peakProposalBody.hidden = true;
+          peakRefusalBody.hidden = false;
+        }
+      }
+
+      roleButtons.forEach(function (b) {
+        b.addEventListener("click", function () {
+          stopPeakPlay();
+          peakState.role = b.getAttribute("data-role");
+          peakState.stage = 0;
+          peakActionStatus.textContent = "";
+          renderPeak();
+        });
+      });
+
+      stageButtons.forEach(function (b) {
+        b.addEventListener("click", function () {
+          stopPeakPlay();
+          peakState.stage = Number(b.getAttribute("data-stage"));
+          renderPeak();
+        });
+      });
+
+      peakStepBtn.addEventListener("click", function () {
+        stopPeakPlay();
+        peakState.stage = (peakState.stage + 1) % 5;
+        renderPeak();
+      });
+
+      peakPlayBtn.addEventListener("click", function () {
+        if (prefersReducedMotion()) return;
+        if (peakState.timer) {
+          stopPeakPlay();
+          return;
+        }
+        peakPlayBtn.setAttribute("aria-pressed", "true");
+        peakPlayBtn.textContent = "Pause";
+        peakState.timer = setInterval(function () {
+          peakState.stage = (peakState.stage + 1) % 5;
+          renderPeak();
+        }, 1700);
+      });
+
+      peakConfirmBtn.addEventListener("click", function () {
+        stopPeakPlay();
+        peakState.stage = 4;
+        renderPeak();
+        peakOutcomeBadge.className = "tag-label tag-label--ok";
+        peakOutcomeBadge.textContent = "Applied (illustration)";
+        peakActionStatus.textContent = "Applied (illustration)";
+      });
+
+      peakCancelBtn.addEventListener("click", function () {
+        stopPeakPlay();
+        peakState.stage = 4;
+        renderPeak();
+        peakOutcomeBadge.className = "tag-label";
+        peakOutcomeBadge.textContent = "Cancelled (illustration)";
+        peakActionStatus.textContent = "Cancelled (illustration) — no write executed";
+      });
+
+      syncPlayButtonMotion();
+      if (typeof reducedMotionQuery.addEventListener === "function") {
+        reducedMotionQuery.addEventListener("change", syncPlayButtonMotion);
+      }
+      renderPeak();
+
+      if (!prefersReducedMotion() && "IntersectionObserver" in window) {
+        var peakCard = document.getElementById("exhibit-peak-title").closest(".exhibit-card");
+        var peakObserver = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting && !peakState.hasAutoWalked && !peakState.timer && peakState.stage === 0) {
+              peakState.hasAutoWalked = true;
+              peakObserver.disconnect();
+              var walkTimer = setInterval(function () {
+                if (prefersReducedMotion() || peakState.stage >= 4) {
+                  clearInterval(walkTimer);
+                  return;
+                }
+                peakState.stage += 1;
+                renderPeak();
+              }, 1100);
+            }
+          });
+        }, { threshold: 0.45 });
+        peakObserver.observe(peakCard);
+      }
+
+      /* Exhibit 2: Eval scoreboard SVG chart */
+      var evalRuns = [
+        { date: "Oct 26", routing: 93.2, tool: 86.9, latency: 4.6 },
+        { date: "Nov 2",  routing: 97.3, tool: 91.8, latency: 5.6 },
+        { date: "Nov 9",  routing: 95.9, tool: 90.2, latency: 5.4 },
+        { date: "Nov 16", routing: 93.2, tool: 86.9, latency: 5.1 }
+      ];
+
+      var evalState = {
+        view: "accuracy",
+        selected: 3
+      };
+
+      var svgGrid = document.getElementById("eval-svg-grid");
+      var svgSeries = document.getElementById("eval-svg-series");
+      var evalLegend = document.getElementById("eval-legend");
+      var evalReadout = document.getElementById("eval-readout");
+      var evalViewBtns = document.querySelectorAll("[data-view]");
+      var evalRunBtns = document.querySelectorAll("[data-run]");
+      var svgNS = "http://www.w3.org/2000/svg";
+
+      function el(tag, attrs, text) {
+        var node = document.createElementNS(svgNS, tag);
+        Object.keys(attrs).forEach(function (k) {
+          node.setAttribute(k, String(attrs[k]));
+        });
+        if (text !== undefined) node.textContent = text;
+        return node;
+      }
+
+      function renderEvalChart() {
+        svgGrid.innerHTML = "";
+        svgSeries.innerHTML = "";
+
+        var xCoords = [110, 255, 400, 545];
+        var yTop = 26;
+        var yBot = 174;
+        var h = yBot - yTop;
+
+        var isAcc = evalState.view === "accuracy";
+        var minVal = isAcc ? 80 : 4.0;
+        var maxVal = isAcc ? 100 : 6.0;
+        var ticks = isAcc ? [80, 85, 90, 95, 100] : [4.0, 4.5, 5.0, 5.5, 6.0];
+
+        function yFor(v) {
+          return yBot - ((v - minVal) / (maxVal - minVal)) * h;
+        }
+
+        svgGrid.appendChild(el("text", { x: 66, y: 14, class: "axis-note" }, isAcc ? "Y-axis: 80%–100%" : "Y-axis: 4.0–6.0 s"));
+
+        ticks.forEach(function (t) {
+          var y = yFor(t);
+          svgGrid.appendChild(el("line", { x1: 66, y1: y, x2: 590, y2: y, class: "grid-line" }));
+          svgGrid.appendChild(el("text", { x: 58, y: y + 4, "text-anchor": "end" }, isAcc ? t + "%" : t.toFixed(1) + "s"));
+        });
+
+        svgGrid.appendChild(el("line", {
+          x1: xCoords[evalState.selected],
+          y1: yTop,
+          x2: xCoords[evalState.selected],
+          y2: yBot,
+          class: "active-col"
+        }));
+
+        evalRuns.forEach(function (r, idx) {
+          svgGrid.appendChild(el("text", {
+            x: xCoords[idx],
+            y: 198,
+            "text-anchor": "middle",
+            style: idx === evalState.selected ? "fill: var(--text); font-weight: 600;" : ""
+          }, r.date));
+        });
+
+        function drawSeries(key, colorVar, labelOffset) {
+          var pts = evalRuns.map(function (r, idx) {
+            return xCoords[idx] + "," + yFor(r[key]).toFixed(1);
+          }).join(" ");
+
+          svgSeries.appendChild(el("polyline", {
+            fill: "none",
+            stroke: colorVar,
+            "stroke-width": 2.5,
+            "stroke-linejoin": "round",
+            "stroke-linecap": "round",
+            points: pts
+          }));
+
+          evalRuns.forEach(function (r, idx) {
+            var cx = xCoords[idx];
+            var cy = yFor(r[key]);
+            var active = idx === evalState.selected;
+            var circle = el("circle", {
+              cx: cx,
+              cy: cy,
+              r: active ? 6.5 : 4.5,
+              fill: active ? colorVar : "var(--surface)",
+              stroke: colorVar,
+              "stroke-width": 2.5,
+              style: "cursor: pointer;"
+            });
+            circle.addEventListener("click", function () {
+              evalState.selected = idx;
+              renderEvalChart();
+            });
+            circle.addEventListener("mouseenter", function () {
+              evalState.selected = idx;
+              renderEvalChart();
+            });
+            svgSeries.appendChild(circle);
+
+            var valLabel = isAcc ? r[key].toFixed(1) + "%" : r[key].toFixed(1) + " s";
+            svgSeries.appendChild(el("text", {
+              x: cx,
+              y: cy + labelOffset,
+              "text-anchor": "middle",
+              class: "point-label"
+            }, valLabel));
+          });
+        }
+
+        if (isAcc) {
+          drawSeries("routing", "var(--accent)", -11);
+          drawSeries("tool", "var(--series-2)", 18);
+          evalLegend.innerHTML = '<span class="legend-item"><span class="legend-swatch legend-swatch--routing" aria-hidden="true"></span>Routing</span><span class="legend-item"><span class="legend-swatch legend-swatch--tool" aria-hidden="true"></span>Tool execution</span>';
+        } else {
+          drawSeries("latency", "var(--warn)", -12);
+          evalLegend.innerHTML = '<span class="legend-item"><span class="legend-swatch legend-swatch--latency" aria-hidden="true"></span>Avg latency (s)</span>';
+        }
+
+        evalViewBtns.forEach(function (b) {
+          b.setAttribute("aria-pressed", String(b.getAttribute("data-view") === evalState.view));
+        });
+
+        evalRunBtns.forEach(function (b, idx) {
+          b.setAttribute("aria-pressed", String(idx === evalState.selected));
+        });
+
+        var cur = evalRuns[evalState.selected];
+        evalReadout.textContent = cur.date + " — Routing: " + cur.routing.toFixed(1) + "% · Tool execution: " + cur.tool.toFixed(1) + "% · Avg latency: " + cur.latency.toFixed(1) + " s";
+      }
+
+      evalViewBtns.forEach(function (b) {
+        b.addEventListener("click", function () {
+          evalState.view = b.getAttribute("data-view");
+          renderEvalChart();
+        });
+      });
+
+      evalRunBtns.forEach(function (b) {
+        b.addEventListener("click", function () {
+          evalState.selected = Number(b.getAttribute("data-run"));
+          renderEvalChart();
+        });
+      });
+
+      renderEvalChart();
+
+      /* Exhibit 3: Ravo X-Ray */
+      var cacheBtns = document.querySelectorAll("[data-cache]");
+      var embedBar = document.getElementById("ravo-embed-bar");
+      var embedVal = document.getElementById("ravo-embed-val");
+      var embedSub = document.getElementById("ravo-embed-sub");
+
+      cacheBtns.forEach(function (b) {
+        b.addEventListener("click", function () {
+          var mode = b.getAttribute("data-cache");
+          cacheBtns.forEach(function (btn) {
+            btn.setAttribute("aria-pressed", String(btn === b));
+          });
+          if (mode === "on") {
+            embedBar.style.width = "2%";
+            embedVal.textContent = "~3 ms";
+            embedSub.textContent = "Redis embedding cache";
+          } else {
+            embedBar.style.width = "89%";
+            embedVal.textContent = "~160 ms";
+            embedSub.textContent = "OpenAI API (spikes past 800 ms)";
+          }
+        });
+      });
+
+      var tabProducts = document.getElementById("tab-products");
+      var tabDocuments = document.getElementById("tab-documents");
+      var panelProducts = document.getElementById("panel-products");
+      var panelDocuments = document.getElementById("panel-documents");
+      var retrievalTabs = [tabProducts, tabDocuments];
+
+      function activateRetrievalTab(tab) {
+        var isProd = tab === tabProducts;
+        tabProducts.setAttribute("aria-selected", String(isProd));
+        tabDocuments.setAttribute("aria-selected", String(!isProd));
+        panelProducts.hidden = !isProd;
+        panelDocuments.hidden = isProd;
+      }
+
+      retrievalTabs.forEach(function (tab, idx) {
+        tab.addEventListener("click", function () {
+          activateRetrievalTab(tab);
+        });
+        tab.addEventListener("keydown", function (e) {
+          if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
+            e.preventDefault();
+            var next = retrievalTabs[(idx + 1) % retrievalTabs.length];
+            activateRetrievalTab(next);
+            next.focus();
+          }
+        });
+      });
+
+      /* CoverPilot inline illustration */
+      var cpCases = {
+        water: {
+          lit: ["guard", "retrieve", "agent", "answer"],
+          stop: [],
+          note: "Retrieve + cite: retriever returns matching policy passages; citations come from the retriever, never from the model's text."
+        },
+        flight: {
+          lit: ["guard", "retrieve"],
+          stop: ["answer"],
+          note: "Relevance floor (cosine ≥ 0.33): out-of-scope query gets no sources and answers \"not covered\" instead of citing the nearest section."
+        },
+        inject: {
+          lit: [],
+          stop: ["guard"],
+          note: "Guard refuses before the LLM: injection guard strips known prompt-injection phrases and blocks attack-only messages before any LLM call."
+        }
+      };
+
+      var cpBtns = document.querySelectorAll("[data-cp]");
+      var cpNote = document.getElementById("cp-note");
+      var cpStageMap = {
+        guard: document.getElementById("cp-s-guard"),
+        retrieve: document.getElementById("cp-s-retrieve"),
+        agent: document.getElementById("cp-s-agent"),
+        answer: document.getElementById("cp-s-answer")
+      };
+
+      cpBtns.forEach(function (b) {
+        b.addEventListener("click", function () {
+          var key = b.getAttribute("data-cp");
+          var cfg = cpCases[key];
+          cpBtns.forEach(function (btn) {
+            btn.setAttribute("aria-pressed", String(btn === b));
+          });
+          Object.keys(cpStageMap).forEach(function (k) {
+            var node = cpStageMap[k];
+            node.classList.remove("is-lit", "is-stop");
+            if (cfg.lit.indexOf(k) !== -1) node.classList.add("is-lit");
+            if (cfg.stop.indexOf(k) !== -1) node.classList.add("is-stop");
+          });
+          cpNote.textContent = cfg.note;
+        });
+      });
     })();
   </script>
 </body>
