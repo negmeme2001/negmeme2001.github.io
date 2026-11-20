@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mohamed Ahmed Negm — AI Engineer</title>
+  <meta name="description" content="Mohamed Ahmed Negm — AI Engineer building production LLM systems: tool-using agents, voice assistants, and retrieval with evaluation, authorization, and cost tracking built in from the start.">
+  <meta property="og:title" content="Mohamed Ahmed Negm — AI Engineer">
+  <meta property="og:description" content="I build production LLM systems: tool-using agents, voice assistants and retrieval, with evaluation, authorization and cost tracking built in from the start.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://negmeme2001.github.io/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #fafafa;
+      --surface: #ffffff;
+      --surface-muted: #f3f4f6;
+      --text: #111827;
+      --text-muted: #4b5563;
+      --border: #e5e7eb;
+      --accent: #0f766e;
+      --accent-hover: #0d625b;
+      --accent-soft: #f0fdfa;
+      --accent-border: #99f6e4;
+      --on-accent: #ffffff;
+      --shadow: 0 1px 2px rgba(17, 24, 39, 0.04);
+      --font-sans: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      --radius: 10px;
+      --max-w: 52rem;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #0b0f14;
+        --surface: #121821;
+        --surface-muted: #1a222d;
+        --text: #f3f4f6;
+        --text-muted: #9ca3af;
+        --border: #232d3b;
+        --accent: #2dd4bf;
+        --accent-hover: #5eead4;
+        --accent-soft: rgba(45, 212, 191, 0.08);
+        --accent-border: rgba(45, 212, 191, 0.28);
+        --on-accent: #042f2e;
+        --shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+      }
+    }
+
+    :root[data-theme="dark"] {
+      --bg: #0b0f14;
+      --surface: #121821;
+      --surface-muted: #1a222d;
+      --text: #f3f4f6;
+      --text-muted: #9ca3af;
+      --border: #232d3b;
+      --accent: #2dd4bf;
+      --accent-hover: #5eead4;
+      --accent-soft: rgba(45, 212, 191, 0.08);
+      --accent-border: rgba(45, 212, 191, 0.28);
+      --on-accent: #042f2e;
+      --shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      margin: 0;
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      font-size: 1rem;
+      line-height: 1.65;
+      overflow-wrap: break-word;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+    }
+
+    a:hover {
+      color: var(--accent-hover);
+    }
+
+    a:focus-visible,
+    button:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
+
+    .skip-link {
+      position: absolute;
+      left: -9999px;
+      top: 0;
+      background: var(--accent);
+      color: var(--on-accent);
+      padding: 0.5rem 0.875rem;
+      font-weight: 600;
+      text-decoration: none;
+      z-index: 100;
+    }
+
+    .skip-link:focus {
+      left: 1rem;
+      top: 1rem;
+    }
+
+    .container {
+      width: 100%;
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 1.25rem;
+    }
+
+    /* Header & Navigation */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: color-mix(in srgb, var(--bg) 88%, transparent);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      min-height: 3.5rem;
+      padding-block: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      font-family: var(--font-mono);
+      font-size: 0.9375rem;
+      font-weight: 500;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: -0.01em;
+    }
+
+    .brand:hover {
+      color: var(--accent);
+    }
+
+    .nav-group {
+      display: flex;
+      align-items: center;
+      gap: 0.875rem;
+      flex-wrap: wrap;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 0.875rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    .theme-toggle {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      padding: 0.3rem 0.55rem;
+      border-radius: 6px;
+      cursor: pointer;
+      line-height: 1.2;
+    }
+
+    .theme-toggle:hover {
+      color: var(--text);
+      border-color: var(--accent);
+    }
+
+    /* Main Sections */
+    main {
+      padding-bottom: 4rem;
+    }
+
+    section {
+      padding: 3rem 0;
+      border-bottom: 1px solid var(--border);
+      scroll-margin-top: 4.5rem;
+    }
+
+    section:last-of-type {
+      border-bottom: none;
+    }
+
+    .section-heading {
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      margin: 0 0 1.5rem;
+    }
+
+    /* Hero */
+    .hero {
+      padding-top: 3.5rem;
+      padding-bottom: 3rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(1.9rem, 4.5vw, 2.65rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin: 0 0 0.5rem;
+    }
+
+    .hero-title {
+      font-size: clamp(1.0625rem, 2.4vw, 1.25rem);
+      font-weight: 500;
+      color: var(--accent);
+      margin: 0 0 0.375rem;
+    }
+
+    .hero-location {
+      font-family: var(--font-mono);
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      margin: 0 0 1.5rem;
+    }
+
+    .hero-pitch {
+      max-width: 68ch;
+      font-size: 1.0625rem;
+      color: var(--text);
+      margin: 0 0 2rem;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.875rem;
+      margin: 0 0 2rem;
+    }
+
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem 1.125rem;
+      box-shadow: var(--shadow);
+      min-width: 0;
+    }
+
+    .stat-value {
+      font-family: var(--font-mono);
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.25;
+      margin: 0 0 0.25rem;
+    }
+
+    .stat-label {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+      margin: 0;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.55rem 1rem;
+      border-radius: 7px;
+      font-size: 0.9375rem;
+      font-weight: 500;
+      text-decoration: none;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      transition: border-color 0.15s ease, background-color 0.15s ease;
+    }
+
+    .btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--on-accent);
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-hover);
+      border-color: var(--accent-hover);
+      color: var(--on-accent);
+    }
+
+    /* Projects */
+    .projects-list {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+
+    .project-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      min-width: 0;
+    }
+
+    .project-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.375rem;
+    }
+
+    .project-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      letter-spacing: -0.015em;
+      margin: 0;
+    }
+
+    .project-badge {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--accent);
+      background: var(--accent-soft);
+      border: 1px solid var(--accent-border);
+      border-radius: 999px;
+      padding: 0.15rem 0.6rem;
+      white-space: nowrap;
+    }
+
+    .project-summary {
+      max-width: 68ch;
+      color: var(--text);
+      font-weight: 500;
+      margin: 0 0 0.875rem;
+    }
+
+    .project-bullets {
+      max-width: 68ch;
+      margin: 0 0 1.125rem;
+      padding-left: 1.25rem;
+      color: var(--text-muted);
+    }
+
+    .project-bullets li {
+      margin-bottom: 0.4rem;
+    }
+
+    .project-bullets li:last-child {
+      margin-bottom: 0;
+    }
+
+    .chip-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .chip {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      background: var(--surface-muted);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.2rem 0.55rem;
+      line-height: 1.35;
+    }
+
+    .project-links {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 1rem;
+      padding-top: 0.875rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .project-status-note {
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+    }
+
+    /* Experience */
+    .timeline {
+      display: grid;
+      gap: 1.75rem;
+    }
+
+    .exp-item {
+      position: relative;
+      padding-left: 1.25rem;
+      border-left: 2px solid var(--border);
+    }
+
+    .exp-item::before {
+      content: "";
+      position: absolute;
+      left: -5px;
+      top: 0.45rem;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    .exp-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.5rem 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.35rem;
+    }
+
+    .exp-company {
+      font-size: 1.0625rem;
+      font-weight: 600;
+      margin: 0;
+    }
+
+    .exp-meta {
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+    }
+
+    .roles-list {
+      list-style: none;
+      margin: 0.35rem 0 0;
+      padding: 0;
+      display: grid;
+      gap: 0.35rem;
+    }
+
+    .role-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 0.5rem 1rem;
+      flex-wrap: wrap;
+    }
+
+    .role-title {
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .role-dates {
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+    }
+
+    .exp-note {
+      max-width: 68ch;
+      margin: 0.5rem 0 0;
+      color: var(--text-muted);
+    }
+
+    .edu-block {
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .edu-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin: 0 0 0.5rem;
+    }
+
+    .edu-list {
+      margin: 0;
+      padding-left: 1.25rem;
+      color: var(--text-muted);
+      max-width: 68ch;
+    }
+
+    .edu-list li + li {
+      margin-top: 0.3rem;
+    }
+
+    /* Skills */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.25rem;
+    }
+
+    .skill-group {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.125rem 1.25rem;
+      box-shadow: var(--shadow);
+      min-width: 0;
+    }
+
+    .skill-group-title {
+      font-size: 0.9375rem;
+      font-weight: 600;
+      margin: 0 0 0.75rem;
+      color: var(--text);
+    }
+
+    /* Contact */
+    .contact-lead {
+      max-width: 68ch;
+      font-size: 1.0625rem;
+      margin: 0 0 1.25rem;
+    }
+
+    .contact-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem 1.5rem;
+      align-items: center;
+      font-weight: 500;
+    }
+
+    .contact-links a {
+      overflow-wrap: anywhere;
+    }
+
+    /* Footer */
+    .site-footer {
+      border-top: 1px solid var(--border);
+      padding: 1.75rem 0 2.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+    }
+
+    /* Responsive */
+    @media (max-width: 680px) {
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .skills-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding-top: 2.5rem;
+      }
+
+      section {
+        padding: 2.25rem 0;
+      }
+
+      .project-card {
+        padding: 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body id="top">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="container nav-bar">
+      <a class="brand" href="#top">Mohamed Ahmed Negm</a>
+      <nav class="nav-group" aria-label="Primary">
+        <ul class="nav-links">
+          <li><a href="#work">Work</a></li>
+          <li><a href="#experience">Experience</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+        <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Toggle color theme">Theme</button>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="container">
+    <section class="hero" aria-labelledby="hero-name">
+      <h1 id="hero-name">Mohamed Ahmed Negm</h1>
+      <p class="hero-title">AI Engineer — LLM Agents · Voice AI · Retrieval</p>
+      <p class="hero-location">Alexandria, Egypt · Open to remote and relocation</p>
+      <p class="hero-pitch">I build production LLM systems: tool-using agents, voice assistants and retrieval, with evaluation, authorization and cost tracking built in from the start.</p>
+
+      <div class="stats-grid" aria-label="Key highlights">
+        <article class="stat-card">
+          <p class="stat-value">15 tools</p>
+          <p class="stat-label">production AI agent with confirmation-gated writes</p>
+        </article>
+        <article class="stat-card">
+          <p class="stat-value">93–97%</p>
+          <p class="stat-label">routing accuracy, weekly CI evals (73 scored cases)</p>
+        </article>
+        <article class="stat-card">
+          <p class="stat-value">5,700 users</p>
+          <p class="stat-label">Fantasy24Club, built as sole engineer</p>
+        </article>
+      </div>
+
+      <div class="actions">
+        <a class="btn btn-primary" href="mailto:mohamedahmednegm811@gmail.com">Email</a>
+        <a class="btn" href="https://github.com/negmeme2001" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a class="btn" href="https://www.linkedin.com/in/mohamed-ahmed-negm/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      </div>
+    </section>
+
+    <section id="work" aria-labelledby="work-heading">
+      <h2 id="work-heading" class="section-heading">Selected work</h2>
+      <div class="projects-list">
+        <article class="project-card">
+          <div class="project-header">
+            <h3 class="project-title">Ravo X-Ray</h3>
+          </div>
+          <p class="project-summary">A bilingual retail voice assistant where every answer shows where its time went.</p>
+          <ul class="project-bullets">
+            <li>Typed and spoken Arabic/English shopping assistant over 1,500 products and store documents.</li>
+            <li>Per-answer latency traces showed search costs 3–6 ms while ~90% of answer time is the LLM.</li>
+            <li>Redis query-embedding cache: ~160 ms → ~3 ms. Labelled retrieval eval: 81% top-1 / 84% top-5, with known weak spots kept on the scoreboard.</li>
+            <li>LiveKit voice agent: speech-to-text bake-off, turn handling that waits through thinking pauses, fallback voice.</li>
+          </ul>
+          <ul class="chip-list" aria-label="Ravo X-Ray stack">
+            <li class="chip">FastAPI</li>
+            <li class="chip">LiveKit Agents</li>
+            <li class="chip">PostgreSQL + pgvector</li>
+            <li class="chip">Redis</li>
+            <li class="chip">Deepgram</li>
+            <li class="chip">Cartesia</li>
+            <li class="chip">Vercel</li>
+          </ul>
+          <div class="project-links">
+            <a href="https://github.com/negmeme2001/ravo-xray" target="_blank" rel="noopener noreferrer">Code</a>
+            <a href="https://ravo-xray.vercel.app" target="_blank" rel="noopener noreferrer">Live demo (access code on request)</a>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <div class="project-header">
+            <h3 class="project-title">CoverPilot</h3>
+          </div>
+          <p class="project-summary">An insurance customer assistant that cites its sources and says 'not covered' when it should.</p>
+          <ul class="project-bullets">
+            <li>LangGraph agent: injection guard → retrieval → agent ↔ tools, streamed over SSE.</li>
+            <li>Citations come from the retriever, never from the model's text; a relevance floor handles out-of-scope questions.</li>
+            <li>Claim lookup and filing tools with Pydantic validation; 94 tests; zero-cost mode on Groq.</li>
+          </ul>
+          <ul class="chip-list" aria-label="CoverPilot stack">
+            <li class="chip">LangGraph</li>
+            <li class="chip">FastAPI</li>
+            <li class="chip">FAISS</li>
+            <li class="chip">Streamlit</li>
+            <li class="chip">Docker Compose</li>
+          </ul>
+          <div class="project-links">
+            <a href="https://github.com/negmeme2001/coverpilot" target="_blank" rel="noopener noreferrer">Code</a>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <div class="project-header">
+            <h3 class="project-title">Peak Assistant</h3>
+            <span class="project-badge">production, closed source</span>
+          </div>
+          <p class="project-summary">The AI agent B2B customers use inside PeakTime.</p>
+          <ul class="project-bullets">
+            <li>15 tools, including create/update/approve actions that only run after the user confirms a proposal.</li>
+            <li>Role-based authorization across 24 intents enforced before any tool runs.</li>
+            <li>85-case golden eval suite run weekly in CI; cache-aware cost tracking and Grafana dashboards.</li>
+          </ul>
+          <ul class="chip-list" aria-label="Peak Assistant stack">
+            <li class="chip">OpenAI Agents SDK</li>
+            <li class="chip">NestJS</li>
+            <li class="chip">MongoDB</li>
+            <li class="chip">Redis</li>
+            <li class="chip">Next.js</li>
+          </ul>
+          <div class="project-links">
+            <span class="project-status-note">Closed source · ProCrew</span>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <div class="project-header">
+            <h3 class="project-title">Fantasy24Club</h3>
+            <span class="project-badge">production</span>
+          </div>
+          <p class="project-summary">Fantasy Premier League predictions and advice for 5,700 users.</p>
+          <ul class="project-bullets">
+            <li>Sole engineer: FastAPI service serving AIrsenal Bayesian models for player-point predictions and transfer suggestions.</li>
+            <li>GPT-4o assistant with real-time web search scoped to the current gameweek, bilingual English/Arabic intent routing.</li>
+          </ul>
+          <ul class="chip-list" aria-label="Fantasy24Club stack">
+            <li class="chip">FastAPI</li>
+            <li class="chip">AIrsenal</li>
+            <li class="chip">Celery</li>
+            <li class="chip">Redis</li>
+            <li class="chip">GPT-4o</li>
+            <li class="chip">Tavily</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="experience" aria-labelledby="experience-heading">
+      <h2 id="experience-heading" class="section-heading">Experience</h2>
+      <div class="timeline">
+        <article class="exp-item">
+          <div class="exp-header">
+            <h3 class="exp-company">ProCrew (PeakTime)</h3>
+            <span class="exp-meta">Alexandria, Egypt · Promoted twice</span>
+          </div>
+          <ul class="roles-list">
+            <li class="role-row">
+              <span class="role-title">Mid-level AI Engineer</span>
+              <span class="role-dates">Jan 2026 – Present</span>
+            </li>
+            <li class="role-row">
+              <span class="role-title">Junior AI Engineer</span>
+              <span class="role-dates">May 2024 – Dec 2025</span>
+            </li>
+            <li class="role-row">
+              <span class="role-title">AI Intern</span>
+              <span class="role-dates">Oct 2023 – Apr 2024</span>
+            </li>
+          </ul>
+        </article>
+
+        <article class="exp-item">
+          <div class="exp-header">
+            <h3 class="exp-company">LamasaTech (Ravo AI)</h3>
+            <span class="exp-meta">UK, remote</span>
+          </div>
+          <ul class="roles-list">
+            <li class="role-row">
+              <span class="role-title">AI Engineer (part-time)</span>
+              <span class="role-dates">Jul 2026 – Present</span>
+            </li>
+          </ul>
+          <p class="exp-note">Designed and shipped a guided first-run setup that cut new-customer onboarding from ~45 actions to a 4-step guide.</p>
+        </article>
+      </div>
+
+      <div class="edu-block">
+        <h3 class="edu-title">Education</h3>
+        <ul class="edu-list">
+          <li>B.Sc. Artificial Intelligence, Kafr El-Sheikh University (2019–2023)</li>
+          <li>DEPI Scholarship: AWS Machine Learning Engineer track (2024)</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="skills" aria-labelledby="skills-heading">
+      <h2 id="skills-heading" class="section-heading">Skills</h2>
+      <div class="skills-grid">
+        <article class="skill-group">
+          <h3 class="skill-group-title">LLMs &amp; Agents</h3>
+          <ul class="chip-list">
+            <li class="chip">OpenAI Agents SDK</li>
+            <li class="chip">LangGraph</li>
+            <li class="chip">MCP</li>
+            <li class="chip">tool calling</li>
+            <li class="chip">structured outputs</li>
+            <li class="chip">human-in-the-loop actions</li>
+            <li class="chip">prompt-injection defense</li>
+          </ul>
+        </article>
+
+        <article class="skill-group">
+          <h3 class="skill-group-title">Retrieval</h3>
+          <ul class="chip-list">
+            <li class="chip">pgvector (HNSW)</li>
+            <li class="chip">FAISS</li>
+            <li class="chip">embedding caches</li>
+            <li class="chip">retrieval evals</li>
+          </ul>
+        </article>
+
+        <article class="skill-group">
+          <h3 class="skill-group-title">Voice AI</h3>
+          <ul class="chip-list">
+            <li class="chip">LiveKit Agents</li>
+            <li class="chip">Deepgram</li>
+            <li class="chip">Cartesia</li>
+            <li class="chip">turn detection</li>
+            <li class="chip">Arabic/English voice</li>
+          </ul>
+        </article>
+
+        <article class="skill-group">
+          <h3 class="skill-group-title">Evaluation &amp; Observability</h3>
+          <ul class="chip-list">
+            <li class="chip">golden-set evals</li>
+            <li class="chip">LLM-as-judge</li>
+            <li class="chip">evals in CI</li>
+            <li class="chip">Prometheus</li>
+            <li class="chip">Grafana</li>
+          </ul>
+        </article>
+
+        <article class="skill-group">
+          <h3 class="skill-group-title">Backend &amp; Frontend</h3>
+          <ul class="chip-list">
+            <li class="chip">Python</li>
+            <li class="chip">TypeScript</li>
+            <li class="chip">FastAPI</li>
+            <li class="chip">NestJS</li>
+            <li class="chip">Celery</li>
+            <li class="chip">BullMQ</li>
+            <li class="chip">Next.js</li>
+            <li class="chip">Vue 3</li>
+          </ul>
+        </article>
+
+        <article class="skill-group">
+          <h3 class="skill-group-title">Data &amp; Cloud</h3>
+          <ul class="chip-list">
+            <li class="chip">PostgreSQL</li>
+            <li class="chip">MongoDB</li>
+            <li class="chip">Redis</li>
+            <li class="chip">Docker</li>
+            <li class="chip">GitHub Actions</li>
+            <li class="chip">Vercel</li>
+            <li class="chip">AWS</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="contact" aria-labelledby="contact-heading">
+      <h2 id="contact-heading" class="section-heading">Contact</h2>
+      <p class="contact-lead">Open to AI Engineer roles — remote, or relocation to the Gulf.</p>
+      <div class="contact-links">
+        <a href="mailto:mohamedahmednegm811@gmail.com">mohamedahmednegm811@gmail.com</a>
+        <a href="https://www.linkedin.com/in/mohamed-ahmed-negm/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href="https://github.com/negmeme2001" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span>© 2026 Mohamed Ahmed Negm</span>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var btn = document.getElementById("theme-toggle");
+      var root = document.documentElement;
+      function isDark() {
+        var t = root.getAttribute("data-theme");
+        if (t) return t === "dark";
+        return window.matchMedia("(prefers-color-scheme: dark)").matches;
+      }
+      function sync() {
+        btn.textContent = isDark() ? "Light" : "Dark";
+      }
+      btn.addEventListener("click", function () {
+        root.setAttribute("data-theme", isDark() ? "light" : "dark");
+        sync();
+      });
+      sync();
+    })();
+  </script>
+</body>
+</html>
